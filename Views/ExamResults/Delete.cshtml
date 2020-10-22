@@ -1,0 +1,51 @@
+﻿@model University_Final_Project.Models.ExamResult
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ExamResult</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.subject_FId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.subject_FId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Student_FId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Student_FId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.mid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.mid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.final)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.final)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.sessional)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.sessional)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Exam_Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

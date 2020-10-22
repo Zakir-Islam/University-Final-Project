@@ -1,0 +1,13 @@
+﻿.aside1 {
+    margin:0,0,0,0;
+    width:15%;
+    float:left;
+    height:710px;
+    background-color:skyblue;
+}
+.content {
+    width: 85%;
+    float: left;
+    height: 710px;
+  
+}

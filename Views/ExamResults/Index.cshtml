@@ -1,0 +1,68 @@
+﻿@model IEnumerable<University_Final_Project.Models.ExamResult>
+
+@inject University_Final_Project.Repository.SubjectRepository subjectRepository
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Subject
+            </th>
+            <th>
+                Student
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.final)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sessional)
+            </th>
+            <th>GPA</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @subjectRepository.getSubjectName(item.subject_FId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.student_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.final)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sessional)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gpa)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Exam_Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Exam_Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Exam_Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<hr />
+

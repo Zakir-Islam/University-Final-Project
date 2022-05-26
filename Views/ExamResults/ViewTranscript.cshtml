@@ -1,0 +1,133 @@
+﻿
+@model University_Final_Project.Models.TranscriptWithStudent
+@inject University_Final_Project.Repository.IStudentRepository studentRepository
+@inject University_Final_Project.Repository.SubjectRepository subjectRepository
+@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<hr />
+
+
+<div id="tran">
+
+    <Center>
+        <h3 style="color:red">ACADEMIC TRANSCRIPT</h3>
+        <h4>Department of @Model.student.degree.department.departmentName  </h4>
+        <h5>Bachelor of @Model.student.degree.DegreeName</h5>
+    </Center>
+
+    <table class="table">
+
+
+        <tr>
+            <th></th>
+            <td></td>
+            <th>Reg No : </th>
+            <td>@Model.student.Reg_Number</td>
+            <td rowspan="3"><img src="~/images/uni-logo.png" /></td>
+        </tr>
+        <tr>
+            <th>Name :</th>
+            <td>@await studentRepository.GetFullNameAsync(Model.student.Roll_Number)</td>
+            <th>Roll No :</th>
+            <td>@Model.student.Roll_Number</td>
+        </tr>
+        <tr>
+            <th>Father Name : </th>
+            <td>@Model.student.Father_Name</td>
+            <th>Session : </th>
+            <td>@Model.student.Session_Start-@(Model.student.Session_Start+4)</td>
+        </tr>
+
+    </table>
+    <div class="row">
+        <div class="col-sm-6">
+            <table class="table" border="2">
+                <thead>
+                    <tr>
+                        <th scope="col">Code</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Cr Hrs</th>
+                        <th scope="col">Marks</th>
+                        <th scope="col">Grade</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="col-sm-6">
+            <table class="table" border="1">
+                <thead>
+                    <tr>
+                        <th scope="col">Code</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Cr Hrs</th>
+                        <th scope="col">Marks</th>
+                        <th scope="col">Grade</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        @{
+        }
+        @foreach (var item in Model.transcripts)
+        {
+            <div class="col-sm-6">
+                <table class="table" style="height:400px">
+                    <thead class="thead-light">
+                        <tr>
+                            <th colspan="5" class="text-center">Semester @item.semester</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in item.examResults)
+                        {
+                            <tr>
+                                <td>@i.subject.Subject_Id</td>
+                                <td>@i.subject.corse_title</td>
+                                <td>@i.subject.credit_hours</td>
+                                <td>@i.Marks</td>
+                                <td>@i.Grade</td>
+                            </tr>
+                        }
+
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <th>Cr Hrs </th>
+                            <td>@item.CrHrs</td>
+
+                        </tr>
+                        <tr>
+                            <th>Semester GPA</th>
+                            <td>@item.GPA</td>
+                            <th>CGPA </th>
+                            <td>@item.CGPA</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        }
+
+
+    </div>
+
+
+
+</div>
+<button class="btn btn-primary" onclick="printContent('tran')">Print</button>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/custom.js"></script>
+}
+
+

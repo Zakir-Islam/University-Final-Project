@@ -1,0 +1,58 @@
+﻿@model University_Final_Project.Models.Attendence
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Attendence</h4>
+<hr />
+@if (ViewBag.success != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Record added  succesfully!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="container ">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label"><h4>Download Template File</h4></label>
+                    <a asp-action="DownloadResultTemplate" class="btn btn-success form-control">Download Template</a><br />
+                    <label class="control-label"><h4>Choose Mid Attendance File</h4></label>
+                    <input type="file" name="fileMid" class="form-control" required data-val="true" data-val-required="The csv file is required."><br>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="File" data-valmsg-replace="true"></span><br>
+                   
+                    <label class="control-label"><h4>Choose Final Attendance File</h4></label>
+                    <input type="file" name="fileFinal" class="form-control" required data-val="true" data-val-required="The csv file is required."><br>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="File" data-valmsg-replace="true"></span><br>
+                   
+                    <label class="control-label"><h4>Subject</h4></label>
+                    <select asp-for="subjectId" asp-items="ViewBag.list" class="form-control">
+                    </select><br>
+
+
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />|
+                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

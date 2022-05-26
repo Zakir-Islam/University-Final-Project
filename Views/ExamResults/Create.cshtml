@@ -4,30 +4,71 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>ExamResult</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-               
-                <input type="file" name="File"  />
-                <span asp-validation-for="subject_FId" class="text-danger"></span>
-            </div>
+@if (ViewBag.success!=null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+         Record added  succesfully!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container ">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label"><h4>Download Template File</h4></label>
+                    <a asp-action="DownloadResultTemplate" class="btn btn-success form-control">Download Template</a><br />
+                    <label class="control-label"><h4>Choose Result File</h4></label>
+                    <input type="file" name="File" class="form-control" required data-val="true" data-val-required="The csv file is required."><br>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="File" data-valmsg-replace="true"></span><br>
+                    <label class="control-label"><h4>Subject</h4></label>
+                    <select asp-for="subject_FId" asp-items="ViewBag.list" class="form-control">
+                    </select><br>
+                    <label class="control-label"><h4>Semester</h4></label>
+                    <select asp-for="semester" class="form-control">
+                        <option value="1" name="semester">
+                            1
+                        </option>
+                        <option value="2" name="semester">
+                            2
+                        </option>
+                        <option value="3" name="semester">
+                            3
+                        </option>
+                        <option value="4" name="semester">
+                            4
+                        </option>
+                        <option value="5" name="semester">
+                            5
+                        </option>
+                        <option value="6" name="semester">
+                            6
+                        </option>
+                        <option value="7" name="semester">
+                            7
+                        </option>
+                        <option value="8" name="semester">
+                            8
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />|
+                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                </div>
+
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using University_Final_Project.Models;
 
 namespace University_Final_Project.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SubjectsController : Controller
     {
         private readonly ExamContext _context;
@@ -19,13 +21,18 @@ namespace University_Final_Project.Controllers
         }
 
         // GET: Subjects
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Subjects.ToListAsync());
+            var subjects = await _context.Subjects.ToListAsync();
+            if (searchString != null)
+            {
+                subjects = subjects.Where(s => s.corse_title == searchString).ToList();
+            }
+            return View(subjects);
         }
 
         // GET: Subjects/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -52,20 +59,22 @@ namespace University_Final_Project.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,corse_title,credit_hours")] Subject subject)
+  
+        public async Task<IActionResult> Create( Subject subject)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(subject);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewBag.success = true;
+                ModelState.Clear();
+                return View();
             }
             return View(subject);
         }
 
         // GET: Subjects/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -77,6 +86,7 @@ namespace University_Final_Project.Controllers
             {
                 return NotFound();
             }
+          
             return View(subject);
         }
 
@@ -84,8 +94,8 @@ namespace University_Final_Project.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,corse_title,credit_hours")] Subject subject)
+       
+        public async Task<IActionResult> Edit(string id,  Subject subject)
         {
             if (id != subject.Subject_Id)
             {
@@ -116,7 +126,7 @@ namespace University_Final_Project.Controllers
         }
 
         // GET: Subjects/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -136,7 +146,7 @@ namespace University_Final_Project.Controllers
         // POST: Subjects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var subject = await _context.Subjects.FindAsync(id);
             _context.Subjects.Remove(subject);
@@ -144,7 +154,7 @@ namespace University_Final_Project.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubjectExists(int id)
+        private bool SubjectExists(string id)
         {
             return _context.Subjects.Any(e => e.Subject_Id == id);
         }

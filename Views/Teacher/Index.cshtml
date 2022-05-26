@@ -1,0 +1,55 @@
+﻿
+@model IEnumerable<University_Final_Project.Models.Teacher>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Create</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Last_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Father_Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Last_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Father_Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Employee_Id" class="btn btn-primary">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Employee_Id" class="btn btn-primary">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Employee_Id"class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,52 @@
+﻿
+
+@model CreateRoleModel
+
+
+
+<html>
+<head>
+    
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateRole</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <h4>Create Role</h4>
+        <hr />
+        @if (ViewBag.success != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Record added  succesfully!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="CreateRole">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Role_Name" class="control-label"></label>
+                        <input asp-for="Role_Name" class="form-control" />
+                        <span asp-validation-for="Role_Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create Role" class="btn btn-primary" />|
+                        <a class="btn btn-primary" asp-action="ViewList">Back to List</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+

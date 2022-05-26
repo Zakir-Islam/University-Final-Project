@@ -1,0 +1,81 @@
+﻿
+@model List<RegisterModel>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="d-inline">
+    <form asp-action="Index" method="get">
+
+        <div class="form-actions no-color form-inline">
+
+            <p id="para">
+                <a asp-action="Register" class="btn btn-primary ml-2">Create New</a>
+                <a asp-action="Index" class="btn btn-secondary  ml-2">Back to Full List</a>
+                <h5 class="ml-auto">User Name : </h5> <input type="text" name="searchString" class="ml-2" />
+                <input type="submit" value="Search" class="btn btn-primary ml-2" />
+
+            </p>
+        </div>
+    </form>
+
+
+</div>
+
+    
+    <table  class="table">
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                User Name
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+
+        </tr>
+        @{
+
+            var Count = 1;
+
+            @foreach (var user in Model)
+            {
+    <tr>
+        <td>
+            @Count
+        </td>
+        <td>
+            @user.UserName
+        </td>
+        <td>
+            @user.FirstName
+        </td>
+        <td>
+            @user.LastName
+        </td>
+        <td>
+            <a asp-action="EditUser" asp-route-id="@user.user_id" class="btn btn-primary">Edit</a> |
+            <a asp-action="UserDetail" asp-route-id="@user.user_id"class="btn btn-primary">Details</a> |
+            <a asp-action="Delete" asp-route-id="@user.user_id"class="btn btn-danger">Delete</a>|
+            <a asp-action="VIewRoles" asp-route-id="@user.user_id"class="btn btn-success">View Roles</a> 
+        </td>
+
+
+    </tr>
+                Count++;
+            }
+
+            }
+    </table>
+
+
+
+                
+

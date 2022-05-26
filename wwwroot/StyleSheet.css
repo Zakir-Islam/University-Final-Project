@@ -11,3 +11,6 @@
     height: 710px;
   
 }
+#logout-dropdown:hover {
+    background-color: rgb(78, 205, 196);
+}

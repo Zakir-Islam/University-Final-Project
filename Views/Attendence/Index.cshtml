@@ -1,0 +1,119 @@
+﻿@model IEnumerable<University_Final_Project.Models.Attendence>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<br />
+<br />
+@if (ViewBag.CardFlag)
+{
+    <table>
+        <tr>
+            <th>Total Lectures : </th>
+            <td>@((int)ViewBag.TotalLecture)</td>
+        </tr>
+        <tr>
+            <th>Total Presence : </th>
+            <td>@ViewBag.TotalPresence</td>
+        </tr>
+        <tr>
+            <th>Total Absence : </th>
+            <td>@ViewBag.TotalAbsence</td>
+        </tr>
+        <tr>
+            <th>Total Leaves  : </th>
+            <td>@ViewBag.TotalLeave</td>
+        </tr>
+        <tr>
+            <th>Percentage     : </th>
+            <td>
+                @{
+                    var per = (ViewBag.TotalPresence / ViewBag.TotalLecture * 100);
+                }
+                @per %
+            </td>
+        </tr>
+
+
+
+    </table>
+    <hr />
+    @if (per < 75.00)
+    {
+        <div  class="alert alert-danger" role="alert">
+            You are not allowed to sit in the exams in this subject your attendence is @per %
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success" role="alert" >
+            You are allowed to sit in the exams in this subject your attendence is @per %
+        </div>
+    }
+
+}
+else
+{
+    <div class="d-inline">
+        <form asp-action="StudentAttendenceDash" method="get">
+
+            <div class="form-actions no-color form-inline">
+
+                <p id="para">
+                    <a asp-action="Create" class="btn btn-primary ml-2">Create New</a>
+                    <a asp-action="Index" class="btn btn-primary  ml-2">Back to Full List</a>
+                    <h5 class="ml-auto">ID of Student : </h5> <input type="text" name="std_id" class="ml-2" />
+                    <input type="submit" value="Search" class="btn btn-primary ml-2" />
+
+                </p>
+            </div>
+        </form>
+
+
+    </div>
+}
+
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.studentId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.subjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.lectureNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.studentId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.subjectId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lectureNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.id">Edit</a> |
+                    <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.id">Details</a> |
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="d-inline">
+    <form asp-action="ViewList" method="get">
+
+        <div class="form-actions no-color form-inline">
+
+            <p id="para">
+                <a asp-action="CreateRole" class="btn btn-primary ml-2">Create New</a>
+                <a asp-action="ViewList" class="btn btn-primary  ml-2">Back to Full List</a>
+                <h5 class="ml-auto">Role Name : </h5> <input type="text" name="searchString" class="ml-2" />
+                <input type="submit" value="Search" class="btn btn-primary ml-2" />
+
+            </p>
+        </div>
+    </form>
+
+
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
+                 
+                    <a asp-action="DeleteRole" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

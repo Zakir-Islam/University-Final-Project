@@ -6,21 +6,31 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using University_Final_Project.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace University_Final_Project.Controllers
 {
+   [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ExamContext examContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,ExamContext examContext)
         {
             _logger = logger;
+            this.examContext = examContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var model = new DashboardCounter();
+            model.NoAdm = examContext.Admins.Count();
+            model.NoStd = examContext.Students.Count();
+            model.NoTch = examContext.Teachers.Count();
+            model.NoDegr = examContext.Degrees.Count();
+            model.NoDep = examContext.Departments.Count();
+            model.NoSub = examContext.Subjects.Count();
+            return View(model);
         }
 
         public IActionResult Privacy()

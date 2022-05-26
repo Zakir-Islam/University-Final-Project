@@ -1,16 +1,45 @@
 ﻿@model IEnumerable<University_Final_Project.Models.ExamResult>
 
 @inject University_Final_Project.Repository.SubjectRepository subjectRepository
+@inject University_Final_Project.Repository.IStudentRepository studentRepository
 @{
     ViewData["Title"] = "Index";
 }
 
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+
+
+<div class="d-inline">
+    <form asp-action="AdminViewTranscript" method="get">
+
+        <div class="form-actions no-color form-inline">
+
+            <p id="para">
+                <a asp-action="Create" class="btn btn-primary ml-2">Create New</a>
+                <a asp-action="Index" class="btn btn-secondary  ml-2">Back to Full List</a>
+                <h5 class="ml-auto">ID of Student : </h5> <input type="text" name="std_id" class="ml-2" />
+                <input type="submit" value="Transcript" class="btn btn-primary ml-2" />
+
+            </p>
+        </div>
+    </form>
+
+
+</div>
+
+
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Error
+    </div>
+    <hr>
+}
+
+
 <table class="table">
     <thead>
         <tr>
@@ -18,16 +47,17 @@
                 Subject
             </th>
             <th>
-                Student
+                Student ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.mid)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.final)
+                Semester
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.sessional)
+                Marks
             </th>
             <th>GPA</th>
             <th></th>
@@ -36,31 +66,34 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @subjectRepository.getSubjectName(item.subject_FId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.student_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.mid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.final)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.sessional)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.gpa)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Exam_Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Exam_Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Exam_Id">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @subjectRepository.getSubjectName(item.subject_FId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student_FId)
+                </td>
+                <td>
+                    @await studentRepository.GetFullNameAsync(item.Student_FId)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.semester)
+                </td>
+
+                <td>
+                    @item.Marks
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gpa)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Exam_Id" class="btn btn-primary">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Exam_Id" class="btn btn-primary">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Exam_Id" class="btn btn-danger">Delete</a>
+
+                </td>
+            </tr>
         }
     </tbody>
 </table>

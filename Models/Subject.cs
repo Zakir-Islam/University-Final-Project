@@ -10,9 +10,9 @@ namespace University_Final_Project.Models
     public class Subject
     {
         [Key]
-        public int Subject_Id { get; set; }
+        public string  Subject_Id { get; set; }
 
-        public String corse_title { get; set; }
+        public string corse_title { get; set; }
 
         public int credit_hours { get; set; }
 

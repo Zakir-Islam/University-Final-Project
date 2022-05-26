@@ -13,25 +13,18 @@ namespace University_Final_Project.Models
         [Key]
         public int  Exam_Id { get; set; }
 
-        public int Student_FId { get; set; }
-        public int subject_FId{ get; set; }
-        [NotMapped ]
-        public string student_name { get; set; }
-      
-        public double mid { get; set; }
-        public double final { get; set; }
-        public double sessional { get; set; }
+        public string Student_FId { get; set; }
+        public string subject_FId{ get; set; }
+       
+        public  int  semester { get; set; }
+        public double Marks { get; set; }
         [NotMapped]
         public double gpa { get; set; }
+        [NotMapped]
+        public string Grade { get; set; }
 
         public Subject subject { get; set; }
-
-        public Student Student { get; set; }
-
-
-
-
-        
+        public Student student { get; set; }
 
     }
 }

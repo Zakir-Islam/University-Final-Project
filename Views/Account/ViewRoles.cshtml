@@ -1,0 +1,42 @@
+﻿
+@model RemoveUserRoleModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="AssignRole" asp-route-user_id="@Model.user_id" class="btn btn-primary">Assign New Role</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                 Name
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.roles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item)
+                </td>
+              
+
+                <td>
+
+                    <a asp-action="Remove" asp-route-name="@item" asp-route-user_id="@Model.user_id" class="btn btn-danger">Remove From Role </a> |
+                    <a asp-action="index" class="btn btn-primary" >Back To List</a> |
+                  
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Server.IIS;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,14 @@ namespace University_Final_Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
+
+            
+
             services.AddControllersWithViews(opt=> {
 
                 var policy = new AuthorizationPolicyBuilder()
@@ -52,9 +62,16 @@ namespace University_Final_Project
                 opt.Password.RequireNonAlphanumeric = false;
             });
 
-            services.AddScoped<StudentRepository, StudentRepository>();
+        
             services.AddScoped<SubjectRepository, SubjectRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IDegreeRepository, DegreeRepository>();
             services.AddScoped<GradeCalculator, GradeCalculator>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IExamResultRepository, ExamResultRepository>();
+            services.AddScoped<IAttendenceRepository, AttendenceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +100,7 @@ namespace University_Final_Project
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=LogIn}/{id?}");
+                    pattern: "{controller=account}/{action=login}/{id?}");
             });
         }
     }

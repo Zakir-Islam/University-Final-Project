@@ -6,9 +6,23 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="d-inline">
+    <form asp-action="Index" method="get">
+
+        <div class="form-actions no-color form-inline">
+
+            <p id="para">
+                <a asp-action="Create" class="btn btn-primary ml-2">Create New</a>
+                <a asp-action="Index" class="btn btn-primary ml-2">Back to Full List</a>
+                <h5 class="ml-auto">Course Title : </h5> <input type="text" name="searchString" class="ml-2" />
+                <input type="submit" value="Search" class="btn btn-primary ml-2" />
+
+            </p>
+        </div>
+    </form>
+
+
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -38,9 +52,9 @@
                 @Html.DisplayFor(modelItem => item.credit_hours)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Subject_Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Subject_Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Subject_Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Subject_Id" class="btn btn-primary">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Subject_Id" class="btn btn-primary">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Subject_Id" class="btn btn-danger">Delete</a>
             </td>
         </tr>
 }

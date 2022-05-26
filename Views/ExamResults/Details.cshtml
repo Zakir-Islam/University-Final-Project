@@ -1,48 +1,45 @@
 ﻿@model University_Final_Project.Models.ExamResult
+@inject University_Final_Project.Repository.SubjectRepository subjectRepository
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+
 
 <div>
-    <h4>ExamResult</h4>
+    <hr />
+    <h3>Exam Result Details</h3>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.subject_FId)
+        <dt class="col-sm-2">
+            Student ID
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.subject_FId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Student_FId)
+        <dt class="col-sm-2">
+           Subject
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Student_FId)
+        <dd class="col-sm-10">
+            @subjectRepository.getSubjectName(Model.subject_FId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.mid)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.semester)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.mid)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.semester)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.final)
+        <dt class="col-sm-2">
+            Marks 
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.final)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Marks)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.sessional)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.sessional)
-        </dd>
+    
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Exam_Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Exam_Id" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
 </div>

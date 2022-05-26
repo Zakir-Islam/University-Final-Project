@@ -12,12 +12,14 @@ namespace University_Final_Project.Models
 {
     public class ApplicationUser:IdentityUser
     {
-     
-      
-         public string FirstName { get; set; }
-      
-         public string LastName { get; set; }
-      
+           
+            public string student_Fid { get; set; }
+            public string teacher_Fid { get; set; }
+            public string admin_Fid { get; set; }
+            public Student Student { get; set; }
+            public Teacher Teacher { get; set; }
+
+
 
     }
 }

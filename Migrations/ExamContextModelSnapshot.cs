@@ -150,6 +150,28 @@ namespace University_Final_Project.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("University_Final_Project.Models.Admin", b =>
+                {
+                    b.Property<string>("Employee_Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Father_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("First_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Last_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Employee_Id");
+
+                    b.ToTable("Admins");
+                });
+
             modelBuilder.Entity("University_Final_Project.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -168,12 +190,6 @@ namespace University_Final_Project.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -201,12 +217,27 @@ namespace University_Final_Project.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("StudentRoll_Number")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TeacherEmployee_Id")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
+
+                    b.Property<string>("admin_Fid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("student_Fid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("teacher_Fid")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -218,7 +249,76 @@ namespace University_Final_Project.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("StudentRoll_Number");
+
+                    b.HasIndex("TeacherEmployee_Id");
+
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("University_Final_Project.Models.Attendence", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("lectureNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("studentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("subjectId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("attendences");
+                });
+
+            modelBuilder.Entity("University_Final_Project.Models.Degree", b =>
+                {
+                    b.Property<string>("DegreeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DegreeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("departmentFid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("departmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("DegreeId");
+
+                    b.HasIndex("departmentId");
+
+                    b.ToTable("Degrees");
+                });
+
+            modelBuilder.Entity("University_Final_Project.Models.Department", b =>
+                {
+                    b.Property<string>("departmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("departmentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("departmentId");
+
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("University_Final_Project.Models.ExamResult", b =>
@@ -228,60 +328,75 @@ namespace University_Final_Project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Student_FId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Student_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Subject_Id")
-                        .HasColumnType("int");
-
-                    b.Property<double>("final")
+                    b.Property<double>("Marks")
                         .HasColumnType("float");
 
-                    b.Property<double>("mid")
-                        .HasColumnType("float");
+                    b.Property<string>("Student_FId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("sessional")
-                        .HasColumnType("float");
+                    b.Property<string>("Subject_Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("subject_FId")
+                    b.Property<int>("semester")
                         .HasColumnType("int");
+
+                    b.Property<string>("studentRoll_Number")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("subject_FId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Exam_Id");
 
-                    b.HasIndex("Student_Id");
-
                     b.HasIndex("Subject_Id");
+
+                    b.HasIndex("studentRoll_Number");
 
                     b.ToTable("ExamResults");
                 });
 
             modelBuilder.Entity("University_Final_Project.Models.Student", b =>
                 {
-                    b.Property<int>("Student_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Roll_Number")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FirstMidName")
+                    b.Property<string>("DegreeFid")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("DegreeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Father_Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Student_Id");
+                    b.Property<string>("First_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Last_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reg_Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Session_Start")
+                        .HasColumnType("int");
+
+                    b.HasKey("Roll_Number");
+
+                    b.HasIndex("DegreeId");
 
                     b.ToTable("Students");
                 });
 
             modelBuilder.Entity("University_Final_Project.Models.Subject", b =>
                 {
-                    b.Property<int>("Subject_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Subject_Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("corse_title")
                         .HasColumnType("nvarchar(max)");
@@ -294,12 +409,34 @@ namespace University_Final_Project.Migrations
                     b.ToTable("Subjects");
                 });
 
+            modelBuilder.Entity("University_Final_Project.Models.Teacher", b =>
+                {
+                    b.Property<string>("Employee_Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Father_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("First_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Last_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Employee_Id");
+
+                    b.ToTable("Teachers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -308,7 +445,7 @@ namespace University_Final_Project.Migrations
                     b.HasOne("University_Final_Project.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -317,7 +454,7 @@ namespace University_Final_Project.Migrations
                     b.HasOne("University_Final_Project.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -326,13 +463,13 @@ namespace University_Final_Project.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("University_Final_Project.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -341,19 +478,50 @@ namespace University_Final_Project.Migrations
                     b.HasOne("University_Final_Project.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("University_Final_Project.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("University_Final_Project.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentRoll_Number")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("University_Final_Project.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherEmployee_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("University_Final_Project.Models.Degree", b =>
+                {
+                    b.HasOne("University_Final_Project.Models.Department", "department")
+                        .WithMany("degrees")
+                        .HasForeignKey("departmentId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("University_Final_Project.Models.ExamResult", b =>
                 {
-                    b.HasOne("University_Final_Project.Models.Student", "Student")
-                        .WithMany("examResults")
-                        .HasForeignKey("Student_Id");
-
                     b.HasOne("University_Final_Project.Models.Subject", "subject")
                         .WithMany("examResults")
-                        .HasForeignKey("Subject_Id");
+                        .HasForeignKey("Subject_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("University_Final_Project.Models.Student", "student")
+                        .WithMany("examResults")
+                        .HasForeignKey("studentRoll_Number")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("University_Final_Project.Models.Student", b =>
+                {
+                    b.HasOne("University_Final_Project.Models.Degree", "degree")
+                        .WithMany("students")
+                        .HasForeignKey("DegreeId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }
